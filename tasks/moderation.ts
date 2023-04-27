@@ -1,4 +1,4 @@
-import { apiClient, gptClient } from "./api/index";
+import { apiClient, gptClient } from "../api";
 
 (async () => {
   const { token } = await apiClient.authorize("moderation");
