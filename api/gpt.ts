@@ -1,5 +1,10 @@
 import { create, ApisauceInstance } from "apisauce";
-import { CompletionResponse, ModerationResponse } from "./types";
+import {
+  ChatCompletionMessage,
+  ChatCompletionResponse,
+  CompletionResponse,
+  ModerationResponse,
+} from "./types";
 
 class GptClient {
   private readonly api: ApisauceInstance;
@@ -34,7 +39,7 @@ class GptClient {
     const { data, ok, originalError } = await this.api.post<CompletionResponse>(
       `/completions`,
       {
-        model: "text-davinci-003",
+        model: "gpt-3.5-turbo",
         prompt,
       }
     );
@@ -42,6 +47,26 @@ class GptClient {
     if (ok) {
       return data!;
     }
+
+    throw originalError;
+  }
+
+  async getChatCompletion(
+    messages: ChatCompletionMessage[],
+    temperature?: number
+  ): Promise<ChatCompletionResponse> {
+    const { data, ok, originalError } =
+      await this.api.post<ChatCompletionResponse>(`/chat/completions`, {
+        model: "gpt-3.5-turbo",
+        messages: messages,
+        temperature: temperature || 0.7,
+      });
+
+    if (ok) {
+      return data!;
+    }
+
+    console.error(originalError.response?.data);
 
     throw originalError;
   }
