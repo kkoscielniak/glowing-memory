@@ -35,12 +35,16 @@ class GptClient {
     throw originalError;
   }
 
-  async getCompletion(prompt: string): Promise<CompletionResponse> {
+  async getCompletion(
+    prompt: string,
+    options?: any
+  ): Promise<CompletionResponse> {
     const { data, ok, originalError } = await this.api.post<CompletionResponse>(
       `/completions`,
       {
-        model: "gpt-3.5-turbo",
+        model: "text-davinci-003",
         prompt,
+        ...options,
       }
     );
 
@@ -48,7 +52,7 @@ class GptClient {
       return data!;
     }
 
-    throw originalError;
+    throw new Error(originalError.message);
   }
 
   async getChatCompletion(
