@@ -17,7 +17,7 @@ const answers: string[] = [];
 
   messages.push({
     role: "system",
-    content: `You are a blogger's assistant. ${msg} in Polish`,
+    content: `You are a blogger's assistant. ${msg} in Polish. Generate up to 2 sentences.`,
   });
 
   for (const [index, message] of blogMessages.entries()) {

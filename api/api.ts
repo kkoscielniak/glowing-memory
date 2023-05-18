@@ -6,7 +6,7 @@ class ApiClient {
 
   constructor() {
     this.api = create({
-      baseURL: "https://zadania.aidevs.pl",
+      baseURL: process.env.ZADANIA_API_URL,
     });
   }
 
