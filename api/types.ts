@@ -8,8 +8,7 @@ export type TaskResponse = {
   code: number;
   msg: string;
   input: string | string[];
-  question?: string;
-  blog?: string;
+  [key: string]: any;
 };
 
 type ModerationResult = {
