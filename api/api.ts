@@ -37,7 +37,7 @@ class ApiClient {
     throw originalError;
   }
 
-  async answer(token: string, answer: string | string[] | number[]) {
+  async answer(token: string, answer: string | string[] | number[] | object) {
     const { data, ok, originalError, config } = await this.api.post(
       `/answer/${token}`,
       {
