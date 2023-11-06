@@ -23,6 +23,18 @@ class HttpClient {
     throw new Error(originalError.message);
   }
 
+  async post(url: string, body: any): Promise<unknown> {
+    const { data, ok, originalError } = await this.api.post<unknown>(url, {
+      body,
+    });
+
+    if (ok) {
+      return data!;
+    }
+
+    throw new Error(originalError.message);
+  }
+
   async postFormUrlencoded(url: string, payload: any): Promise<unknown> {
     let formUrlencoded;
     if (typeof payload !== "string") {

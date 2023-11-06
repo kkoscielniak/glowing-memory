@@ -74,6 +74,22 @@ class GptClient {
 
     throw originalError;
   }
+
+  async getEmbedding(input: string | string[]): Promise<unknown> {
+    const { data, ok, originalError } = await this.api.post<unknown>(
+      `/embeddings`,
+      {
+        input,
+        model: "text-embedding-ada-002",
+      }
+    );
+
+    if (ok) {
+      return data!;
+    }
+
+    throw originalError;
+  }
 }
 
 export default new GptClient();
