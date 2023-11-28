@@ -2,8 +2,7 @@ import {
   ChatCompletionMessageParam,
   ChatCompletionTool,
 } from "openai/resources";
-import { apiClient, gptClient } from "../api";
-import { ChatCompletionMessage } from "../api/types";
+import { apiClient } from "../api";
 
 import OpenAI from "openai";
 const openai = new OpenAI({
@@ -20,8 +19,10 @@ type CountryData = {
   population: 37950802;
 }[];
 
-// TODO: Returned type
-async function chooseTool(question: string): Promise<any> {
+async function chooseTool(question: string): Promise<{
+  toolName: string;
+  parameter: string;
+}> {
   const messages: ChatCompletionMessageParam[] = [
     {
       role: "user",
@@ -82,8 +83,6 @@ async function chooseTool(question: string): Promise<any> {
 }
 
 async function getExchangeRage(currencyCode: string): Promise<CurrencyData> {
-  // http://api.nbp.pl/api/exchangerates/rates/A/USD/
-
   const response = await fetch(
     `http://api.nbp.pl/api/exchangerates/rates/A/${currencyCode}`
   );
@@ -92,8 +91,6 @@ async function getExchangeRage(currencyCode: string): Promise<CurrencyData> {
 }
 
 async function getCountryData(country: string): Promise<CountryData> {
-  // http://api.nbp.pl/api/exchangerates/rates/A/USD/
-
   const response = await fetch(
     `https://restcountries.com/v3.1/name/${country}?fullText=true`
   );
